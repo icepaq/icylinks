@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-const Profile = ({id}: any) => {
+const Profile = ({profile}: any) => {
 
 
     return (
@@ -11,44 +11,36 @@ const Profile = ({id}: any) => {
             <div className={styles.container} id='container' style={{backgroundImage: 'url("/background.png")', backgroundSize: '100vw 100vh'}}>
                 <div className={styles.profile} >
                     <div className={styles.photo}>
-                        <Image src="/community.png" alt="profile photo" width={100} height={100} />
+                        <Image src={profile.image} alt="profile photo" width={100} height={100} />
                     </div>
                     <div className={styles.title}>
-                        Hi! I'm Anton
+                        {profile.title}
                     </div>
                     <div className={styles.description}>
-                        Co-Founder of Icy Links. Software Engineer and user experience designer 
+                        {profile.description}
                     </div>
                     <div className={styles.social}>
-                        <div className={styles.socialItem}>
-                            <Image src="/igwhite.png" alt="twitter" width={30} height={30} />
-                        </div>
-                        <div className={styles.socialItem}>
-                            <Image src="/igwhite.png" alt="twitter" width={30} height={30} />
-                        </div>
+
+                        {
+                            profile.social.instagram ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
+                        }
+
+                        {
+                            profile.social.twitter ? <><div className={styles.socialItem}><Image src="/twitterwhite.png" alt="twitter" width={30} height={30} /></div></> : null
+                        }
                     </div>
                     <div className={styles.links}>
-                        <Link href="https://github.com/icepaq">
-                            <div className={styles.link}>
-                                <div className={styles.linkText}>My GitHub Profile</div>
-                            </div>
-                        </Link>
-
-                        <Link href="https://icylinks.com">
-                            <div className={styles.link}>
-                           Icy Links Website
-                            </div>
-                        </Link>
-                        <Link href="https://github.com/icepaq">
-                            <div className={styles.link}>
-                                Learn how to code
-                            </div>
-                        </Link>
-                        <Link href="https://github.com/icepaq">
-                            <div className={styles.link}>
-                                The future of Web3
-                            </div>
-                        </Link>
+                        {
+                            profile.links.map((link: any) => {
+                                return (
+                                    <Link href={link.url}>
+                                        <div className={styles.link}>
+                                            <div className={styles.linkText}>{link.text}</div>
+                                        </div>
+                                    </Link>
+                                )
+                            })
+                        }
                     </div>
 
                     <div className={styles.footer}>
@@ -65,7 +57,18 @@ export function getServerSideProps(context: any) {
     const { id } = context.query
     return {
         props: {
-            id: id
+            profile: {
+                image: 'https://avatars.githubusercontent.com/u/62949848?v=4',
+                title: 'Hi! I\'m Anton',
+                description: 'Co-Founder of Icy Links. Software Engineer and user experience designer',
+                social: {
+                    instagram: 'https://www.instagram.com/antonr_1/',
+                },
+                links: [
+                    { text: 'My GitHub Profile', url: 'https://githu.com/icepaq' },
+                    { text: 'Icy Links Website', url: 'https://icylinks.com' }
+                ]
+            }
         },
     }
 }
