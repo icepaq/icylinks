@@ -53,24 +53,20 @@ const Profile = ({profile}: any) => {
     )
 }
 
-export function getServerSideProps(context: any) {
+
+export async function getServerSideProps(context: any) {
     const { id } = context.query
+
+    const params = new URLSearchParams();
+    params.append('id', id);
+    const r = await fetch('http://localhost:3000/api/getprofile', { body: params, method: 'POST' }).then(res => res.json());
+    
     return {
         props: {
-            profile: {
-                image: 'https://avatars.githubusercontent.com/u/62949848?v=4',
-                title: 'Hi! I\'m Anton',
-                description: 'Co-Founder of Icy Links. Software Engineer and user experience designer',
-                social: {
-                    instagram: 'https://www.instagram.com/antonr_1/',
-                },
-                links: [
-                    { text: 'My GitHub Profile', url: 'https://githu.com/icepaq' },
-                    { text: 'Icy Links Website', url: 'https://icylinks.com' }
-                ]
-            }
+            profile: r.profile
         },
     }
 }
+
 
 export default Profile

@@ -2,6 +2,7 @@ import styles from '../../styles/Edit.module.css'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const EditProfile = ({profile}: any) => {
 
@@ -10,10 +11,17 @@ const EditProfile = ({profile}: any) => {
     const [description, setDescription] = useState<string>();
     const [links, setLinks] = useState<any>();
     const [linkObjects, setLinkObjects] = useState<any>([]);
+    const [social, setSocial] = useState<any>();
+    const [render, setRender] = useState<string>('');
+
+    const router = useRouter();
 
     useEffect(() => {
+        setSocial(profile.social);
+        setTitle(profile.title);
+        setDescription(profile.description);
+        setSelectedImage(profile.image);
         setLinks(profile.links);
-        console.log(links)
 
         let temp: any = [];
         profile.links?.map((link: any, index: number) => {
@@ -84,12 +92,42 @@ const EditProfile = ({profile}: any) => {
         updateLinkObjects();
     }
 
+    const changeSocial = (media: string, url: string) => {
+        const tempMedia = social;
+        tempMedia[media] = url;
+        setSocial(tempMedia);
+
+        setRender(Math.random().toString());
+    }
+
+    const updateProfile = async () => {
+        const profile = {
+            id: router.query.profile,
+            image: selectedImage,
+            title: title,
+            description: description,
+            social: social,
+            links: links
+        }
+
+        const params = new URLSearchParams();
+        params.append('profile', JSON.stringify(profile));
+
+        const r = await fetch('/api/updateprofile', { body: params, method: 'POST' }).then(res => res);
+    }
+
     return (
         <>
+        <div className={styles.hidden}>
+        {render}
+        </div>
         <div className={styles.wrapper}>
             <div className={styles.editContainer}>
                 <div className={styles.title}>
                     Edit Page
+                </div>
+                <div className={styles.button} onClick={updateProfile}>
+                    Save Changes
                 </div>
 
                 <div className={styles.picture}>
@@ -128,6 +166,25 @@ const EditProfile = ({profile}: any) => {
                         <div className={styles.addLink} onClick={addLink}>Add link</div>
                     </div>
                 </div>
+                <div className={styles.header}>
+                    Social Media <br />
+                    <div className={styles.links}>
+                        <div className={styles.linkTitle}>{'Instagram'}</div>  
+                        <input className={styles.titleInput} type={'text'} placeholder={'Link'} defaultValue={social?.instagram} onChange={(e) => {changeSocial('instagram', e.target.value)}} />
+                    </div>
+                    <div className={styles.links}>
+                        <div className={styles.linkTitle}>{'Twitter'}</div>  
+                        <input className={styles.titleInput} type={'text'} placeholder={'Link'} defaultValue={social?.twitter} onChange={(e) => {changeSocial('twitter', e.target.value)}}/>
+                    </div>
+                    <div className={styles.links}>
+                        <div className={styles.linkTitle}>{'TikTok'}</div>  
+                        <input className={styles.titleInput} type={'text'} placeholder={'Link'} defaultValue={social?.tiktok} onChange={(e) => {changeSocial('tiktok', e.target.value)}} />
+                    </div>
+                    <div className={styles.links}>
+                        <div className={styles.linkTitle}>{'YouTube'}</div>  
+                        <input className={styles.titleInput} type={'text'} placeholder={'Link'} defaultValue={social?.youtube} onChange={(e) => {changeSocial('youtube', e.target.value)}} />
+                    </div>
+                </div>
             </div>
             <div className={styles.preview}>
             <div className={styles.container} id='container' style={{backgroundImage: 'url("/background.png")', backgroundSize: '100% 100%'}}>
@@ -144,11 +201,11 @@ const EditProfile = ({profile}: any) => {
                     <div className={styles.social}>
 
                         {
-                            profile.social.instagram ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
+                            social?.instagram ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
                         }
 
                         {
-                            profile.social.twitter ? <><div className={styles.socialItem}><Image src="/twitterwhite.png" alt="twitter" width={30} height={30} /></div></> : null
+                            social?.twitter ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
                         }
                     </div>
                     <div className={styles.links}>
@@ -164,22 +221,16 @@ const EditProfile = ({profile}: any) => {
     )
 }
 
-export function getServerSideProps(context: any) {
-    const { id } = context.query
+export async function getServerSideProps(context: any) {
+    const { profile } = context.query
+
+    const params = new URLSearchParams();
+    params.append('id', profile);
+    const r = await fetch('http://localhost:3000/api/getprofile', { body: params, method: 'POST' }).then(res => res.json());
+    
     return {
         props: {
-            profile: {
-                image: 'https://avatars.githubusercontent.com/u/62949848?v=4',
-                title: 'Hi! I\'m Anton',
-                description: 'Co-Founder of Icy Links. Software Engineer and user experience designer',
-                social: {
-                    instagram: 'https://www.instagram.com/antonr_1/',
-                },
-                links: [
-                    { text: 'My GitHub Profile', url: 'https://githu.com/icepaq' },
-                    { text: 'Icy Links Website', url: 'https://icylinks.com' }
-                ]
-            }
+            profile: r.profile
         },
     }
 }

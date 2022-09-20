@@ -5,7 +5,7 @@
 
     background-color: rgb(219, 199, 199);
 
-    height: 100vh;
+    min-height: 110vh;
 }
 
 .editContainer {
@@ -112,6 +112,10 @@
     cursor: pointer;
 }
 
+.links {
+    font-size: 16px;
+}
+
 .link:hover {
     background-color: rgba(0, 0, 0, 0);
     color: white;
@@ -136,4 +140,29 @@
 
 .profile {
     width: 80%;
+}
+
+.linkTitle {
+    display: inline-block;
+    width: 100px;
+}
+
+.hidden {
+    display: none;
+}
+
+.button {
+    background-color: white;
+    border-radius: 8px;
+    color: black;
+
+    padding: 7px 20px;
+
+    margin: 20px 0px;
+
+    transition: 0.3s;
+
+    width: fit-content;
+
+    cursor: pointer;
 }
