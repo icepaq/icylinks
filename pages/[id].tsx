@@ -33,7 +33,7 @@ const Profile = ({profile}: any) => {
                         {
                             profile.links.map((link: any) => {
                                 return (
-                                    <Link href={link.url}>
+                                    <Link href={link.url} key={'key_link_' + link.text}>
                                         <div className={styles.link}>
                                             <div className={styles.linkText}>{link.text}</div>
                                         </div>
