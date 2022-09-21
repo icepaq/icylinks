@@ -24,6 +24,13 @@
     width: 30%;
 }
 
+/* Mobile CSS */
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        width: 100%;
+    }
+}
+
 .form {
     margin-top: 50px;
 }
@@ -33,7 +40,7 @@
     padding: 7px 15px;
     border-radius: 10px;
     margin-bottom: 10px;
-    width: 70%;
+    width: 100%;
 
     background-color: white;
     color: black;
@@ -47,7 +54,7 @@
 
     padding: 7px 15px;
     margin-top: 60px;
-    width: 70%;
+    width: 100%;
 
     cursor: pointer;
 
