@@ -7,12 +7,16 @@ import { useRouter } from 'next/router'
 const EditProfile = ({profile}: any) => {
 
     const [selectedImage, setSelectedImage] = useState<any>(null);
+    const [selectedBackgroundImage, setSelectedBackgroundImage] = useState<any>(null);
     const [title, setTitle] = useState<string>();
     const [description, setDescription] = useState<string>();
     const [links, setLinks] = useState<any>();
     const [linkObjects, setLinkObjects] = useState<any>([]);
     const [social, setSocial] = useState<any>();
     const [render, setRender] = useState<string>('');
+    const [backgroundType, setBackgroundType] = useState<string>('color');
+    const [backgroundColor, setBackgroundColor] = useState<string>('#000000');
+    const [backgroundCSS, setbackgroundCSS] = useState<any>({backgroundImage: 'url("/background.png")', backgroundSize: '100% 100%'});
 
     const router = useRouter();
 
@@ -22,6 +26,15 @@ const EditProfile = ({profile}: any) => {
         setDescription(profile.description);
         setSelectedImage(profile.image);
         setLinks(profile.links);
+        setBackgroundType(profile.backgroundType);
+
+        if(profile.backgroundType == 'color') {
+            setBackgroundColor(profile.background.data);
+            setbackgroundCSS({backgroundColor: profile.background.data});
+        } else {
+            setSelectedBackgroundImage(profile.background.data);
+            setbackgroundCSS({backgroundImage: `url("${profile.background.data}")`, backgroundSize: '100% 100%'});
+        }
 
         let temp: any = [];
         profile.links?.map((link: any, index: number) => {
@@ -60,6 +73,19 @@ const EditProfile = ({profile}: any) => {
         }).then(res => res.json());
 
         setSelectedImage(r.data);
+    }
+
+    const updateBackgroundImage = async (e: any) => {
+        const params = new FormData();
+        params.append('file', e);
+        const r = await fetch('/api/upload', {
+            method: 'POST',
+            body: params
+        }).then(res => res.json());
+
+        setSelectedBackgroundImage(r.data);
+
+        setbackgroundCSS({backgroundImage: 'url("' + r.data + '")', backgroundSize: '100% 100%'});
     }
 
     
@@ -107,13 +133,25 @@ const EditProfile = ({profile}: any) => {
             title: title,
             description: description,
             social: social,
-            links: links
+            links: links,
+            background: {
+                type: backgroundType,
+                data: backgroundType == 'color' ? backgroundColor : selectedBackgroundImage
+            }
         }
 
         const params = new URLSearchParams();
         params.append('profile', JSON.stringify(profile));
 
         const r = await fetch('/api/updateprofile', { body: params, method: 'POST' }).then(res => res);
+    }
+
+    const updateBackground = (type: string) => {
+        if (type === 'color') {
+            setbackgroundCSS({backgroundColor: backgroundColor});
+        } else {
+            setbackgroundCSS({backgroundImage: 'url("/background.png")', backgroundSize: '100% 100%'});
+        }
     }
 
     return (
@@ -128,10 +166,10 @@ const EditProfile = ({profile}: any) => {
                 </div>
                 <div className={styles.button} onClick={updateProfile}>
                     Save Changes
-                </div>
+                </div> 
 
                 <div className={styles.picture}>
-                    {'Choose Picture '}
+                    {'Choose Profile Picture '}
                     <input
                         type="file"
                         name="myImage"
@@ -140,6 +178,27 @@ const EditProfile = ({profile}: any) => {
                         }}
                     />
                 </div>
+                <div className={styles.backgroundSelect}>
+                    <input type="radio" id="html" name="fav_language" value="color" onClick={(e) => {setBackgroundType('color'); updateBackground('color')}} />
+                    <label htmlFor="color">HTML</label>
+                    <input type="radio" id="html" name="fav_language" value="image" onClick={(e) => {setBackgroundType('image'); updateBackground('image')}} />
+                    <label htmlFor="image">Image</label>
+                </div>
+
+                {
+                    backgroundType === 'color' ? (
+                        <input type="color" id="colorpicker" value="#0000ff" onChange={(e) => {setBackgroundColor(e.target.value); updateBackground('color')} }/>
+                    ) : (
+                        <input
+                            type="file"
+                            name="myImage"
+                            onChange={(event: any) => {
+                                updateBackgroundImage(event.target.files[0]);
+                            }}
+                        />
+                    )
+
+                }
 
                 <div className={styles.header}>
                     Title <br />
@@ -187,7 +246,7 @@ const EditProfile = ({profile}: any) => {
                 </div>
             </div>
             <div className={styles.preview}>
-            <div className={styles.container} id='container' style={{backgroundImage: 'url("/background.png")', backgroundSize: '100% 100%'}}>
+            <div className={styles.container} id='container' style={backgroundCSS}>
                 <div className={styles.profile} >
                     <div className={styles.photo}>
                         <Image src={selectedImage || profile.image} alt="profile photo" width={100} height={100} />
