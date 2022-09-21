@@ -5,10 +5,24 @@ import Link from 'next/link'
 
 const Profile = ({profile}: any) => {
 
+    const [backgroundCSS, setBackgroundCSS] = useState({});
+
+    useEffect(() => {
+        if (profile.background.type === 'image') {
+            setBackgroundCSS({
+                backgroundImage: `url(${profile.background.data})`,
+                backgroundSize: '100% 100%'
+            })
+        } else {
+            setBackgroundCSS({
+                backgroundColor: profile.background.data
+            })
+        }
+    }, [])
 
     return (
         <>
-            <div className={styles.container} id='container' style={{backgroundImage: 'url("/background.png")', backgroundSize: '100vw 100vh'}}>
+            <div className={styles.container} id='container' style={backgroundCSS}>
                 <div className={styles.profile} >
                     <div className={styles.photo}>
                         <Image src={profile.image} alt="profile photo" width={100} height={100} />
