@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const profile = JSON.parse(req.body.profile);
 
     const collection = client.db("icylinks").collection("page");
-    const r = await collection.updateOne({ 'profile.id': profile.id }, { $set: { profile: profile, } });
+    const r = await collection.updateOne({ 'profile.id': profile.oldID }, { $set: { profile: profile, } });
     
     res.status(200).json(r);
 }

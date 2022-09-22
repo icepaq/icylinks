@@ -17,6 +17,7 @@ const EditProfile = ({profile}: any) => {
     const [backgroundType, setBackgroundType] = useState<string>('color');
     const [backgroundColor, setBackgroundColor] = useState<string>('#000000');
     const [backgroundCSS, setbackgroundCSS] = useState<any>({backgroundImage: 'url("/background.png")', backgroundSize: '100% 100%'});
+    const [id, setID] = useState<string>('');
 
     const router = useRouter();
 
@@ -27,6 +28,7 @@ const EditProfile = ({profile}: any) => {
         setSelectedImage(profile.image);
         setLinks(profile.links);
         setBackgroundType(profile.backgroundType);
+        setID(profile.id);
 
         if(profile.backgroundType == 'color') {
             setBackgroundColor(profile.background.data);
@@ -127,8 +129,9 @@ const EditProfile = ({profile}: any) => {
     }
 
     const updateProfile = async () => {
-        const profile = {
-            id: router.query.profile,
+        const _profile = {
+            id: id,
+            oldID: profile.id,
             title: document.getElementById('title')?.innerHTML,
             image: selectedImage,
             description: description,
@@ -141,7 +144,7 @@ const EditProfile = ({profile}: any) => {
         }
 
         const params = new URLSearchParams();
-        params.append('profile', JSON.stringify(profile));
+        params.append('profile', JSON.stringify(_profile));
 
         const r = await fetch('/api/updatepage', { body: params, method: 'POST' }).then(res => res);
     }
@@ -152,6 +155,10 @@ const EditProfile = ({profile}: any) => {
         } else {
             setbackgroundCSS({backgroundImage: 'url("/background.png")', backgroundSize: '100% 100%'});
         }
+    }
+
+    const changeID = async (e: any) => {
+        setID(e.target.value);
     }
 
     return (
@@ -168,6 +175,10 @@ const EditProfile = ({profile}: any) => {
                     Save Changes
                 </div> 
 
+                <div className={styles.linkInput} >
+                    <input type={'text'} defaultValue={id} onChange={changeID} />
+                </div>
+                
                 <div className={styles.picture}>
                     {'Choose Profile Picture '}
                     <input
