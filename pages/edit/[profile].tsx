@@ -129,15 +129,15 @@ const EditProfile = ({profile}: any) => {
     const updateProfile = async () => {
         const profile = {
             id: router.query.profile,
+            title: document.getElementById('title')?.innerHTML,
             image: selectedImage,
-            title: title,
             description: description,
             social: social,
             links: links,
             background: {
                 type: backgroundType,
                 data: backgroundType == 'color' ? backgroundColor : selectedBackgroundImage
-            }
+            },
         }
 
         const params = new URLSearchParams();
@@ -161,8 +161,8 @@ const EditProfile = ({profile}: any) => {
         </div>
         <div className={styles.wrapper}>
             <div className={styles.editContainer}>
-                <div className={styles.title}>
-                    Edit Page
+                <div id='title' className={styles.title} contentEditable={true}>
+                    {profile.title}
                 </div>
                 <div className={styles.button} onClick={updateProfile}>
                     Save Changes
