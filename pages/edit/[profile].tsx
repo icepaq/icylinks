@@ -143,7 +143,7 @@ const EditProfile = ({profile}: any) => {
         const params = new URLSearchParams();
         params.append('profile', JSON.stringify(profile));
 
-        const r = await fetch('/api/updateprofile', { body: params, method: 'POST' }).then(res => res);
+        const r = await fetch('/api/updatepage', { body: params, method: 'POST' }).then(res => res);
     }
 
     const updateBackground = (type: string) => {
@@ -285,7 +285,7 @@ export async function getServerSideProps(context: any) {
 
     const params = new URLSearchParams();
     params.append('id', profile);
-    const r = await fetch('http://localhost:3000/api/getprofile', { body: params, method: 'POST' }).then(res => res.json());
+    const r = await fetch('http://localhost:3000/api/getpage', { body: params, method: 'POST' }).then(res => res.json());
     
     return {
         props: {
