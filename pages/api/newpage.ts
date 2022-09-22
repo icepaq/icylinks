@@ -7,7 +7,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const client = new MongoClient(uri);
     await client.connect();
     
-    const id = req.body.id as string;
+    const randomNumber = Math.floor( Math.random() * 10000);
+
+    const id = req.body.id || 'Testpage' + (randomNumber.toString());
     const email = req.body.email as string;
 
     const collection = client.db("icylinks").collection("page");
@@ -32,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
     }
 
-    const r = await collection.insertOne({ profile: pageObject });
+    await collection.insertOne({ profile: pageObject });
     
-    res.status(200).json(r);
+    res.status(200).json({url: '/' + id});
 }

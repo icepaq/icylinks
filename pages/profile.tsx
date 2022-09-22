@@ -3,6 +3,8 @@ import GetUser from '../scripts/GetUser'
 import * as cookie from 'cookie'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
+
 
 const Profile = (props: any) => {
 
@@ -12,7 +14,17 @@ const Profile = (props: any) => {
         if (!props.user) {
             router.push('/login');
         }
-    })
+    }, []);
+
+    const newPage = async (e: any) => {
+        const params = new URLSearchParams();
+        params.append('email', Cookies.get('email') as string);
+        params.append('token', Cookies.get('token') as string);
+        const r = await fetch('/api/newpage').then(res => res.json());
+
+        window.location.href = '/edit' + r.url;
+
+    }
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
@@ -38,7 +50,7 @@ const Profile = (props: any) => {
                     <div className={styles.page}>
                         <div className={styles.pageTitle}>/@anton</div>
                     </div>
-                    <div className={styles.button}>
+                    <div className={styles.button} onClick={newPage}>
                         New Page
                     </div>
                 </div>
