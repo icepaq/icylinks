@@ -7,6 +7,7 @@ const GetUser = async (email: string, token: string) => {
     await client.connect();
     
     const valid = await ValidateToken(email, token);
+
     if (!valid) {
         return null;
     }
