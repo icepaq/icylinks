@@ -3,13 +3,33 @@
     flex-direction: row;
     justify-content: space-between;
 
-    background-color: rgb(219, 199, 199);
+    background-color: rgb(244, 244, 244);
+    color: black;
 
     min-height: 110vh;
 }
 
+.sidebar {
+    width: 4%;
+    height: 100vh;
+
+    background-color: white;
+    border-style: solid;
+    border-width: 0.3px;
+    border-color: rgb(41, 41, 41);
+}
+
 .editContainer {
+    width: 60%;
+}
+
+.padding {
     padding: 0px 20px;
+}
+
+.preview {
+    width: 38%;
+    /* padding: 0px 20px; */
 }
 
 .picture {
@@ -32,6 +52,35 @@
     margin-top: 30px;
 }
 
+.menu {
+    display: flex;
+    width: 100%;
+    justify-content: left;
+    background-color: white;
+
+    border-style: solid;
+    border-width: 0.1px;
+    border-color: rgb(41, 41, 41);
+}
+
+.menuItem {
+    padding: 20px 40px;
+    cursor: pointer;
+
+    transition: 0.1s;
+}
+
+.url {
+    padding: 20px 40px;
+    cursor: pointer;
+
+    transition: 0.1s;
+}
+
+.menuItem:hover {
+    background-color: rgb(215, 215, 215);
+}
+
 .textarea {
     width: 400px;
     height: 200px;
@@ -47,7 +96,8 @@
     width: 350px;
     height: 650px;
 
-    margin: 40px;
+    margin: 0 auto;
+    margin-top: 40px;
 
     border-radius: 14px;
 }

@@ -167,7 +167,22 @@ const EditProfile = ({profile}: any) => {
         {render}
         </div>
         <div className={styles.wrapper}>
+            <div className={styles.sidebar}>
+                x
+            </div>
             <div className={styles.editContainer}>
+                <div className={styles.menu}>
+                    <div className={styles.menuItem}>
+                        Appearance
+                    </div>
+                    <div className={styles.menuItem}>
+                        Links
+                    </div>
+                    <div className={styles.menuItem}>
+                        Settings
+                    </div>
+                </div>
+                <div className={styles.padding}>
                 <div id='title' className={styles.title} contentEditable={true}>
                     {profile.title}
                 </div>
@@ -255,36 +270,42 @@ const EditProfile = ({profile}: any) => {
                         <input className={styles.titleInput} type={'text'} placeholder={'Link'} defaultValue={social?.youtube} onChange={(e) => {changeSocial('youtube', e.target.value)}} />
                     </div>
                 </div>
-            </div>
-            <div className={styles.preview}>
-            <div className={styles.container} id='container' style={backgroundCSS}>
-                <div className={styles.profile} >
-                    <div className={styles.photo}>
-                        <Image src={selectedImage || profile.image} alt="profile photo" width={100} height={100} />
-                    </div>
-                    <div className={styles.title}>
-                        {title || profile.title}
-                    </div>
-                    <div className={styles.description}>
-                        {description || profile.description}
-                    </div>
-                    <div className={styles.social}>
-
-                        {
-                            social?.instagram ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
-                        }
-
-                        {
-                            social?.twitter ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
-                        }
-                    </div>
-                    <div className={styles.links}>
-                        {
-                            linkObjects
-                        }
-                    </div>
                 </div>
             </div>
+            <div className={styles.preview}>
+                <div className={styles.menu}>
+                    <div className={styles.url}>
+                        https://icyl.ink/{id}
+                    </div>
+                </div>
+                <div className={styles.container} id='container' style={backgroundCSS}>
+                    <div className={styles.profile} >
+                        <div className={styles.photo}>
+                            <Image src={selectedImage || profile.image} alt="profile photo" width={100} height={100} />
+                        </div>
+                        <div className={styles.title}>
+                            {title || profile.title}
+                        </div>
+                        <div className={styles.description}>
+                            {description || profile.description}
+                        </div>
+                        <div className={styles.social}>
+
+                            {
+                                social?.instagram ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
+                            }
+
+                            {
+                                social?.twitter ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
+                            }
+                        </div>
+                        <div className={styles.links}>
+                            {
+                                linkObjects
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         </>
