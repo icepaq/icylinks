@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 
-const Login = () => {
+const Login = (props: any) => {
 
     const router = useRouter();
 

@@ -1,11 +1,13 @@
 import styles from '../styles/Settings.module.css'
+import GetUser from '../scripts/GetUser'
+import * as cookie from 'cookie'
 
-const Profile = () => {
+const Profile = (props: any) => {
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
                 <div className={styles.title}>
-                    Hi Anton
+                    {props.user.name}
                 </div>  
 
                 <div className={styles.section}>
@@ -33,6 +35,23 @@ const Profile = () => {
             </div>
         </div>
     )
+}
+
+export async function getServerSideProps(context: any) {
+    console.log(context.req.headers.cookie);
+
+    // Parse email and token from cookie
+    const _cookie = context.req.headers.cookie;
+
+    const parsed = cookie.parse(_cookie);
+    const email = parsed.email;
+    const token = parsed.token;
+
+    const profile = await GetUser(email, token);
+
+    return {
+        props: {user: profile},
+    }
 }
 
 export default Profile
