@@ -8,11 +8,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await client.connect();
     
     const id = req.body.id as string;
+    const email = req.body.email as string;
 
     const collection = client.db("icylinks").collection("page");
 
     const pageObject = {
         id: id,
+        owner: email,
         title: 'title',
         image: '/uploads/profiles/889cb9b9-abb9-4234-a336-3276dc9ae0a5-1663690120042.png',
         description: 'description',
