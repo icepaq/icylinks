@@ -6,7 +6,7 @@ const Profile = () => {
             <div className={styles.wrapper}>
                 <div className={styles.title}>
                     Hi Anton
-                </div>
+                </div>  
 
                 <div className={styles.section}>
                     <div className={styles.sectionTitle}>
