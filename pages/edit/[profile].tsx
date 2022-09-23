@@ -206,7 +206,7 @@ const EditProfile = ({profile}: any) => {
                 </div>
                 <div className={styles.backgroundSelect}>
                     <input type="radio" id="html" name="fav_language" value="color" onClick={(e) => {setBackgroundType('color'); updateBackground('color')}} />
-                    <label htmlFor="color">HTML</label>
+                    <label htmlFor="color">Color</label>
                     <input type="radio" id="html" name="fav_language" value="image" onClick={(e) => {setBackgroundType('image'); updateBackground('image')}} />
                     <label htmlFor="image">Image</label>
                 </div>
