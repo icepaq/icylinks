@@ -73,7 +73,7 @@ export async function getServerSideProps(context: any) {
 
     const params = new URLSearchParams();
     params.append('id', id);
-    const r = await fetch('http://localhost:3000/api/getpage', { body: params, method: 'POST' }).then(res => res.json());
+    const r = await fetch(process.env.NEXT_PUBLIC_SITE_URL + '/api/getpage', { body: params, method: 'POST' }).then(res => res.json());
     
     return {
         props: {

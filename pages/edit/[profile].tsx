@@ -196,13 +196,18 @@ const EditProfile = ({profile}: any) => {
                 
                 <div className={styles.picture}>
                     {'Choose Profile Picture '}
-                    <input
-                        type="file"
-                        name="myImage"
-                        onChange={(event: any) => {
-                            updateImage(event.target.files[0]);
-                        }}
-                    />
+
+                    <label className={styles.fileInput}>
+                        <input
+                            type="file"
+                            name="myImage"
+                            onChange={(event: any) => {
+                                updateImage(event.target.files[0]);
+                            }}
+                        />
+                        Select Image
+                    </label>
+                    
                 </div>
                 <div className={styles.backgroundSelect}>
                     <input type="radio" id="html" name="fav_language" value="color" onClick={(e) => {setBackgroundType('color'); updateBackground('color')}} />
@@ -317,7 +322,7 @@ export async function getServerSideProps(context: any) {
 
     const params = new URLSearchParams();
     params.append('id', profile);
-    const r = await fetch('http://localhost:3000/api/getpage', { body: params, method: 'POST' }).then(res => res.json());
+    const r = await fetch(process.env.NEXT_PUBLIC_SITE_URL + '/api/getpage', { body: params, method: 'POST' }).then(res => res.json());
     
     return {
         props: {

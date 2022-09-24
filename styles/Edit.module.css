@@ -221,3 +221,9 @@
 
     cursor: pointer;
 }
+
+.fileInput {
+    padding: 10px 20px;
+    width: fit-content;
+    background-color: rgb(191, 191, 191);
+}
