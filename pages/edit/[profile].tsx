@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Links from '../../components/pageeditor/links'
 import Appearance from '../../components/pageeditor/appearance'
-
+import Preview from '../../components/pageeditor/preview'
 
 const EditProfile = ({profile}: any) => {
 
@@ -113,41 +113,7 @@ const EditProfile = ({profile}: any) => {
                 <Links links={links} setLinkObjects={setLinkObjects} setLinks={setLinks} social={social} setSocial={setSocial} setRender={setRender} />
                 </div>
             </div>
-            <div className={styles.preview}>
-                <div className={styles.menu}>
-                    <div className={styles.url}>
-                        https://icyl.ink/{id}
-                    </div>
-                </div>
-                <div className={styles.container} id='container' style={backgroundCSS}>
-                    <div className={styles.profile} >
-                        <div className={styles.photo}>
-                            <Image src={selectedImage || profile.image} alt="profile photo" width={100} height={100} />
-                        </div>
-                        <div className={styles.title}>
-                            {title || profile.title}
-                        </div>
-                        <div className={styles.description}>
-                            {description || profile.description}
-                        </div>
-                        <div className={styles.social}>
-
-                            {
-                                social?.instagram ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
-                            }
-
-                            {
-                                social?.twitter ? <><div className={styles.socialItem}><Image src="/igwhite.png" alt="twitter" width={30} height={30} /></div></> : null
-                            }
-                        </div>
-                        <div className={styles.links}>
-                            {
-                                linkObjects
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Preview backgroundCSS={backgroundCSS} selectedImage={selectedImage} profile={profile} title={title} description={description} social={social} linkObjects={linkObjects} id={id} />
         </div>
         </>
     )
