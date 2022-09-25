@@ -30,7 +30,7 @@ const EditProfile = ({profile}: any) => {
         setBackgroundType(profile.backgroundType);
         setID(profile.id);
 
-        if(profile.backgroundType == 'color') {
+        if(profile.background.type == 'color') {
             setBackgroundColor(profile.background.data);
             setbackgroundCSS({backgroundColor: profile.background.data});
         } else {
