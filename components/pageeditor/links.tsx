@@ -1,8 +1,24 @@
 import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 import styles from '../../styles/Edit.module.css'
+import LinkEditor from './LinkEditor';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 
 const Links = ({links, setLinkObjects, setLinks, social, setSocial, setRender}: any) => {
+
+    const _el = useRef<any>(null);
+
+    const [draggableObjects, setDraggableObjects] = useState<any>([]);
+
+    useEffect(() => {
+        const objects = [
+            null,
+            null
+        ]
+
+        setDraggableObjects(objects);
+    }, [])
 
     const updateLinkObjects = () => {
         let temp: any = [];
@@ -59,6 +75,9 @@ const Links = ({links, setLinkObjects, setLinks, social, setSocial, setRender}: 
         <>
             <div className={styles.header}>
                     Links <br />
+                    <LinkEditor />
+                    <LinkEditor />
+                    <LinkEditor />
                     <div className={styles.links}>
                         {
                             links?.map((link: any, index: number) => {
