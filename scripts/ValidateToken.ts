@@ -12,6 +12,18 @@ const ValidateToken = async (email: string, token: string) => {
     if (!result) {
         return false;
     }
+
+    const created = result.timestamp;
+
+    const now = new Date().getTime();
+
+    // Add 1 hour to the timestamp
+    const expiration = created + 3600000;
+
+    if (now > expiration) {
+        return false;
+    }
+
     
     return true;
 }
