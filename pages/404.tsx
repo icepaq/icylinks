@@ -8,9 +8,12 @@ export default function FourOhFour() {
       <a className={styles.notFound}>Oops!</a>
       <a className={styles.description}>The page you are looking for doesn't exist.</a>
       <Link href="/">
-        <a className={styles.link}>
-          Go Back Home
-        </a>
+        <div className={styles.linkWrapper}>
+          <a className={styles.link}>
+            Go Back Home
+          </a>
+        </div>
+        
       </Link>
   </>
 }
