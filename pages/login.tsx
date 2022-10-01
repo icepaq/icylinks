@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 
+
 const Login = () => {
 
     const router = useRouter();
@@ -21,7 +22,8 @@ const Login = () => {
             Cookies.set('token', r.token);
             Cookies.set('email', email);
 
-            Swal.fire({title: 'Success!', text: 'You have been logged in!', icon: 'success'});
+
+            router.push("/profile");
         } else {
             Swal.fire({
                 title: 'Error',
