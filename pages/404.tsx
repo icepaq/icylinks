@@ -4,7 +4,7 @@ import styles from '../styles/Error.module.css'
 export default function FourOhFour() {
   return <>
     <div className={styles.background}>
-      <img className={styles.errorImage} src="../error image.png"></img>
+      <img className={styles.errorImage} src="error image.png"></img>
       <a className={styles.notFound}>Oops!</a>
       <a className={styles.description}>The page you are looking for doesn't exist.</a>
       <Link href="/">
