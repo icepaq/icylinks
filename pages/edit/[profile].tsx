@@ -58,7 +58,7 @@ const EditProfile = ({profile}: any) => {
         const _profile = {
             id: id,
             oldID: profile.id,
-            title: document.getElementById('title')?.innerHTML,
+            title: title,
             image: selectedImage,
             description: description,
             social: social,
