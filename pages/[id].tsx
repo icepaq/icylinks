@@ -75,9 +75,18 @@ export async function getServerSideProps(context: any) {
     params.append('id', id);
     const r = await fetch('http://localhost:3000/api/getpage', { body: params, method: 'POST' }).then(res => res.json());
     
+    if (!r) {
+        return {
+            redirect: {
+              permanent: false,
+              destination: '/404'
+            }
+        }
+    }
+
     return {
         props: {
-            profile: r.profile
+            profile: r?.profile || null
         },
     }
 }
