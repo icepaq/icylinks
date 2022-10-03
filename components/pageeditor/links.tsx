@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import styles from '../../styles/Edit.module.css'
 import LinkEditor from './LinkEditor';
 import { SortableItem } from './SortableItem';
+import switchstyles from '../../styles/Switch.module.css';
+
 import {
     DndContext, 
     closestCenter,
@@ -22,6 +24,7 @@ import {
 const Links = ({links, setLinkObjects, setLinks, social, setSocial, setRender}: any) => {
 
     const [items, setItems] = useState<any>([1, 2, 3]);
+    const [reOrderOn, setReOrderOn] = useState<boolean>(false);
 
     useEffect(() => {
 
@@ -96,33 +99,40 @@ const Links = ({links, setLinkObjects, setLinks, social, setSocial, setRender}: 
             return arrayMove(items, oldIndex, newIndex);
           });
         }
-      }
+    }
+
+    const toggleReOrder = () => {
+        setReOrderOn(!reOrderOn);
+    }
 
     return (
         <>
             <div className={styles.linkEditorWrapper}>
             <div className={styles.header}>
-                    Links <br />
-                    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                        <SortableContext items={items} strategy={verticalListSortingStrategy} >
+                    <div className={styles.toggleReOrder}>
+                        Toggle Links 
+                        <label className={switchstyles.switch}>
+                            <input type={'checkbox'} onClick={toggleReOrder} />
+                            <span className={`${switchstyles.slider} ${switchstyles.round}`}></span>
+                        </label>
+                    </div>
+                    {reOrderOn ?
+                        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                            <SortableContext items={items} strategy={verticalListSortingStrategy} >
+                                {
+                                    links.map((link: any, index: number) => <LinkEditor id={index + 1} key={index} link={link} />)
+                                }
+                            </SortableContext>
+                        </DndContext>
+                        : 
+                        <>
                             {
-                                items.map((id: any) => <LinkEditor id={id} key={id} />)
+                                links.map((link: any, index: number) => <LinkEditor id={index + 1} key={index} link={link} />)
                             }
-
-                        </SortableContext>
-                    </DndContext>
+                        </>
+                    }
+                    
                     <div className={styles.links}>
-                        {
-                            links?.map((link: any, index: number) => {
-                                return (
-                                    <div className={styles.linkEditor}>
-                                        <input className={styles.titleInput} type={'text'} placeholder={'Name'} defaultValue={link.text} onChange={(e) => {changeLinkText(e.target.value, index)}} />
-                                        <input className={styles.titleInput} type={'text'} placeholder={'Link'} defaultValue={link.url}  onChange={(e) => {changeLinkUrl(e.target.value, index)}} />
-                                        <span className={styles.linkDelete} onClick={(e) => {removeLink(index)}}> x </span>
-                                    </div>
-                                )
-                            })
-                        }
                         <div className={styles.addLink} onClick={addLink}>Add link</div>
                     </div>
                 </div>

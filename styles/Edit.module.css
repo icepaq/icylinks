@@ -230,3 +230,8 @@
     width: fit-content;
     background-color: rgb(191, 191, 191);
 }
+
+.toggleReOrder {
+    padding: 10px;
+    font-size: 16px;
+}

@@ -3,10 +3,17 @@ import Image from 'next/image';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-const LinkEditor = ({ id }:  any) => {
+const LinkEditor = ({ id, link }:  any) => {
 
     const urlChanged = (value: string, id: string) => {
+        
         const input = document.getElementById(id) as HTMLInputElement;
+
+        // If the input is less than X characters, return
+        if (input.value.length < 5) {
+            return;
+        }
+
         input.style.width = value.length + "ch";
     }
 
@@ -32,13 +39,12 @@ const LinkEditor = ({ id }:  any) => {
         <>
             <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={styles.linkEditorObject}>
                 <div className={styles.wrapper} >
-                    {id}
                     <div className={styles.title}>
-                        <input style={{fontWeight: 'bold', fontSize: '16px'}}  id='2' className={styles.input} type="text" defaultValue={"https://google.com"} onChange={(e) =>  urlChanged(e.target.value, '2')} />
+                        <input style={{fontWeight: 'bold', fontSize: '16px'}}  id={id + '_2'} className={styles.input} type="text" defaultValue={link.text} onChange={(e) =>  urlChanged(e.target.value, id + '_2')}   />
                         <Image src="/pencil.png" alt="pencil" width={15} height={15} />
                     </div>
                     <div className={styles.url}>
-                        <input id='1' className={styles.input} type="text" defaultValue={"https://google.com"} onChange={(e) =>  urlChanged(e.target.value, '1')} />
+                        <input id={id + '_1'} className={styles.input} type="text" defaultValue={link.url} onChange={(e) =>  urlChanged(e.target.value, id + '_1')} />
                         <Image src="/pencil.png" alt="pencil" width={15} height={15} />
                     </div>
                     <div className={styles.optionRow}>
