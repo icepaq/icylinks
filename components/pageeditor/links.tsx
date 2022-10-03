@@ -2,22 +2,29 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import styles from '../../styles/Edit.module.css'
 import LinkEditor from './LinkEditor';
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { SortableItem } from './SortableItem';
+import {
+    DndContext, 
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    useSensor,
+    useSensors,
+  } from '@dnd-kit/core';
+  import {
+    arrayMove,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+  } from '@dnd-kit/sortable';
 
 
 const Links = ({links, setLinkObjects, setLinks, social, setSocial, setRender}: any) => {
 
-    const _el = useRef<any>(null);
-
-    const [draggableObjects, setDraggableObjects] = useState<any>([]);
+    const [items, setItems] = useState<any>([1, 2, 3]);
 
     useEffect(() => {
-        const objects = [
-            null,
-            null
-        ]
 
-        setDraggableObjects(objects);
     }, [])
 
     const updateLinkObjects = () => {
@@ -71,13 +78,39 @@ const Links = ({links, setLinkObjects, setLinks, social, setSocial, setRender}: 
         setRender(Math.random().toString());
     }
 
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+          coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
+
+    const handleDragEnd = (event: any) => {
+        const {active, over} = event;
+        
+        if (active.id !== over.id) {
+          setItems((items: any) => {
+            const oldIndex = items.indexOf(active.id);
+            const newIndex = items.indexOf(over.id);
+            
+            return arrayMove(items, oldIndex, newIndex);
+          });
+        }
+      }
+
     return (
         <>
+            <div className={styles.linkEditorWrapper}>
             <div className={styles.header}>
                     Links <br />
-                    <LinkEditor />
-                    <LinkEditor />
-                    <LinkEditor />
+                    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                        <SortableContext items={items} strategy={verticalListSortingStrategy} >
+                            {
+                                items.map((id: any) => <LinkEditor id={id} key={id} />)
+                            }
+
+                        </SortableContext>
+                    </DndContext>
                     <div className={styles.links}>
                         {
                             links?.map((link: any, index: number) => {
@@ -112,7 +145,7 @@ const Links = ({links, setLinkObjects, setLinks, social, setSocial, setRender}: 
                         <input className={styles.titleInput} type={'text'} placeholder={'Link'} defaultValue={social?.youtube} onChange={(e) => {changeSocial('youtube', e.target.value)}} />
                     </div>
                 </div>
-                
+                </div>
         </>
     )
 }
