@@ -21,6 +21,7 @@ const EditProfile = ({profile}: any) => {
     const [backgroundColor, setBackgroundColor] = useState<string>('#000000');
     const [backgroundCSS, setbackgroundCSS] = useState<any>({backgroundImage: 'url("/background.png")', backgroundSize: '100% 100%'});
     const [id, setID] = useState<string>('');
+    const [selectedScreen, setSelectedScreen] = useState<string>('vibe');
 
     const router = useRouter();
 
@@ -75,6 +76,7 @@ const EditProfile = ({profile}: any) => {
         const r = await fetch('/api/updatepage', { body: params, method: 'POST' }).then(res => res);
     }
 
+
     return (
         <>
         <div className={styles.hidden}>
@@ -86,10 +88,10 @@ const EditProfile = ({profile}: any) => {
             </div>
             <div className={styles.editContainer}>
                 <div className={styles.menu}>
-                    <div className={styles.menuItem}>
+                    <div className={styles.menuItem} onClick={() => {setSelectedScreen('links')}}>
                         Links
                     </div>
-                    <div className={styles.menuItem}>
+                    <div className={styles.menuItem} onClick={() => {setSelectedScreen('vibe')}}>
                         Vibe
                     </div>
                     <div className={styles.menuItem}>
@@ -103,14 +105,18 @@ const EditProfile = ({profile}: any) => {
                 <div className={styles.button} onClick={updateProfile}>
                     Save Changes
                 </div> 
-
-                <Appearance id={id} setID={setID} setbackgroundCSS={setbackgroundCSS} setSelectedImage={setSelectedImage} 
-                            setBackgroundType={setBackgroundType} backgroundType={backgroundType} 
-                            setSelectedBackgroundImage={setSelectedBackgroundImage} backgroundColor={backgroundColor} 
-                            setBackgroundColor={setBackgroundColor} profile={profile} setTitle={setTitle} 
-                            setDescription={setDescription} setSocial={setSocial} />
-
-                <Links links={links} setLinkObjects={setLinkObjects} setLinks={setLinks} social={social} setSocial={setSocial} setRender={setRender} />
+                {
+                    selectedScreen == 'links' ? 
+                        <Links links={links} setLinkObjects={setLinkObjects} setLinks={setLinks} social={social} setSocial={setSocial} setRender={setRender} /> 
+                        : 
+                        (selectedScreen == 'vibe'?  
+                            <Appearance id={id} setID={setID} setbackgroundCSS={setbackgroundCSS} setSelectedImage={setSelectedImage} 
+                                        setBackgroundType={setBackgroundType} backgroundType={backgroundType} 
+                                        setSelectedBackgroundImage={setSelectedBackgroundImage} backgroundColor={backgroundColor} 
+                                        setBackgroundColor={setBackgroundColor} profile={profile} setTitle={setTitle} 
+                                        setDescription={setDescription} setSocial={setSocial} />
+                        : null)
+                }
                 </div>
             </div>
             <Preview backgroundCSS={backgroundCSS} selectedImage={selectedImage} profile={profile} title={title} description={description} social={social} linkObjects={linkObjects} id={id} />
