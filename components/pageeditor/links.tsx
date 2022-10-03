@@ -42,10 +42,12 @@ const Links = ({links, setLinkObjects, setLinks, social, setSocial, setRender}: 
             )
         })
     
+        console.log(links)
         setLinkObjects(temp);
     }
     
     const changeLinkText = (text: string, index: number) => {
+        console.log(links, index)
         const tempLink = links;
         tempLink[index].text = text;
         setLinks(tempLink);
@@ -120,14 +122,14 @@ const Links = ({links, setLinkObjects, setLinks, social, setSocial, setRender}: 
                         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                             <SortableContext items={items} strategy={verticalListSortingStrategy} >
                                 {
-                                    links.map((link: any, index: number) => <LinkEditor id={index + 1} key={index} link={link} />)
+                                    links.map((link: any, index: number) => <LinkEditor changeLinkText={changeLinkText} changeLinkUrl={changeLinkUrl} id={index + 1} key={index} link={link} />)
                                 }
                             </SortableContext>
                         </DndContext>
                         : 
                         <>
                             {
-                                links.map((link: any, index: number) => <LinkEditor id={index + 1} key={index} link={link} />)
+                                links.map((link: any, index: number) => <LinkEditor changeLinkText={changeLinkText} changeLinkUrl={changeLinkUrl} id={index + 1} key={index} link={link} />)
                             }
                         </>
                     }

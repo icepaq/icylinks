@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-const LinkEditor = ({ id, link }:  any) => {
+const LinkEditor = ({ changeLinkText, changeLinkUrl, id, link }:  any) => {
 
     const urlChanged = (value: string, id: string) => {
         
@@ -33,18 +33,18 @@ const LinkEditor = ({ id, link }:  any) => {
         transform: CSS.Transform.toString(transform),
         transition,
         padding: '5px',
-      };
+    };
 
     return (
         <>
             <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={styles.linkEditorObject}>
                 <div className={styles.wrapper} >
                     <div className={styles.title}>
-                        <input style={{fontWeight: 'bold', fontSize: '16px'}}  id={id + '_2'} className={styles.input} type="text" defaultValue={link.text} onChange={(e) =>  urlChanged(e.target.value, id + '_2')}   />
+                        <input style={{fontWeight: 'bold', fontSize: '16px'}}  id={id + '_2'} className={styles.input} type="text" defaultValue={link.text} onChange={(e) =>  {urlChanged(e.target.value, id + '_2'); changeLinkText(e.target.value, id - 1)}}   />
                         <Image src="/pencil.png" alt="pencil" width={15} height={15} />
                     </div>
                     <div className={styles.url}>
-                        <input id={id + '_1'} className={styles.input} type="text" defaultValue={link.url} onChange={(e) =>  urlChanged(e.target.value, id + '_1')} />
+                        <input id={id + '_1'} className={styles.input} type="text" defaultValue={link.url} onChange={(e) =>  {urlChanged(e.target.value, id + '_1'); changeLinkText(e.target.value, id - 1) } } />
                         <Image src="/pencil.png" alt="pencil" width={15} height={15} />
                     </div>
                     <div className={styles.optionRow}>
