@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: space-between;
 
-    background-color: rgb(244, 244, 244);
+    background-color: rgb(255, 255, 255);
     color: black;
 
     min-height: 110vh;
@@ -33,6 +33,9 @@
 .preview {
     width: 38%;
     /* padding: 0px 20px; */
+    
+
+    background-color: rgb(241, 241, 241);
 }
 
 .picture {
@@ -40,12 +43,19 @@
 }
 
 .titleInput {
-    background-color: white;
+    background-color: rgb(235, 235, 235);
     color: black;
     border-radius: 7px;
     padding: 7px 20px;
 
-    margin: 5px 5px;
+    width: 70%;
+
+    font-size: 16px;
+
+    margin-top: 20px;
+
+    border: 0;
+
 }
 
 .header {
@@ -88,14 +98,19 @@
 }
 
 .textarea {
-    width: 400px;
+    margin-top: 20px;
+    width: 70%;
     height: 200px;
     border-radius: 10px;
 
+    font-family: Arial, Helvetica, sans-serif;
+
     padding: 10px;
 
-    background-color: white;
+    background-color: rgb(235, 235, 235);
     color: black;
+    
+    border: 0;
 }
 
 .container {
@@ -103,12 +118,13 @@
     height: 650px;
 
     margin: 0 auto;
-    margin-top: 40px;
 
     border-radius: 14px;
 }
 .profile {
+
     margin: 0 auto;
+    /* margin-top: 40px; */
 
     width: 60%;
     height: 100vh;
@@ -120,7 +136,7 @@
 
 .title {
     font-weight: bold;
-    font-size: 32px;
+    font-size: 24px;
 
     margin-top: 30px;
 }
@@ -210,7 +226,7 @@
 }
 
 .button {
-    background-color: white;
+    background-color: rgb(235, 235, 235);
     border-radius: 8px;
     color: black;
 
@@ -225,13 +241,83 @@
     cursor: pointer;
 }
 
-.fileInput {
-    padding: 10px 20px;
-    width: fit-content;
-    background-color: rgb(191, 191, 191);
+.circleImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.photoActions {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .toggleReOrder {
     padding: 10px;
     font-size: 16px;
+}
+
+.pictureContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width: 300px;
+}
+
+.greyButton {
+    padding: 7px 15px;
+    border-radius: 14px;
+    width: 200px;
+    display: block;
+    background-color: rgb(205, 205, 205);
+
+    text-align: center;
+}
+
+.sectionTitle {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+
+    padding-bottom: 10px;
+}
+
+.backgroundSelect {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.input::after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -5px;
+    position: relative;
+    background-color: #b3b3b3;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.input:checked::after {
+    background-color: #2196F3;
+}
+
+.colorInput {
+    outline: 0;
+    width: 50px;
+    display: none;
+}
+
+.color {
+    margin-top: 10px;
+    width: 100px;
+    height: 30px;
+    background-color: #d0d0d0;
 }

@@ -1,12 +1,18 @@
 import styles from '../../styles/Edit.module.css'
+import Image from 'next/image';
+import { useEffect } from 'react';
 
 
 const Appearance = ({id, setID, setbackgroundCSS, setSelectedImage, setBackgroundType, 
                      backgroundType, setSelectedBackgroundImage, setBackgroundColor, 
-                     backgroundColor, profile, setTitle, setDescription}: any) => {
+                     backgroundColor, profile, setTitle, setDescription, selectedImage}: any) => {
     const changeID = async (e: any) => {
         setID(e.target.value);
     }
+
+    useEffect(() => {
+        console.log(selectedImage)
+    })
 
     const updateBackground = (type: string) => {
         if (type === 'color') {
@@ -42,36 +48,61 @@ const Appearance = ({id, setID, setbackgroundCSS, setSelectedImage, setBackgroun
 
     return (
         <>
-            <div className={styles.linkInput} >
-                    <input type={'text'} defaultValue={id} onChange={changeID} />
-                </div>
                 
                 <div className={styles.picture}>
-                    {'Choose Profile Picture '}
-
-                    <label className={styles.fileInput}>
-                        <input
-                            type="file"
-                            name="myImage"
-                            onChange={(event: any) => {
-                                updateImage(event.target.files[0]);
-                            }}
-                        />
-                        Select Image
-                    </label>
+                    <div className={styles.sectionTitle}>
+                        Profile
+                    </div>
+                    <div className={styles.pictureContainer}>
+                        <span className={styles.circleImage}>
+                            {selectedImage ? <Image src={selectedImage} width={100} height={100} /> : null}
+                        </span>
+                        <span className={styles.photoActions}>
+                            <div>
+                                <label className={styles.greyButton} >
+                                    <input
+                                        className={styles.greyButton} type="file" name="myImage" onChange={(event: any) => {
+                                            updateImage(event.target.files[0]);
+                                        }}
+                                    />
+                                New Image
+                                </label>
+                            </div>
+                            <div className={styles.greyButton}>
+                                Remove Image
+                            </div>
+                        </span>
+                        
+                    </div>
+                    
                     
                 </div>
+
+                <div className={styles.header}>
+                    <input className={styles.titleInput} type={'text'} placeholder={'Title'} defaultValue={profile.title} onChange={(e) => setTitle(e.target.value)} />
+                </div>
+                <div className={styles.linkInput} >
+                    <input className={styles.titleInput} type={'text'} placeholder={'Title'} defaultValue={id} onChange={changeID} />
+                </div>
+                <textarea className={styles.textarea} onChange={(e) => setDescription(e.target.value)} defaultValue={profile.description} />
+
+                <div className={styles.sectionTitle}>
+                    Background
+                </div>
                 <div className={styles.backgroundSelect}>
-                    <input type="radio" id="html" name="fav_language" value="color" onClick={(e) => {setBackgroundType('color'); updateBackground('color')}} />
+                    <input className={styles.input} type="radio" id="html" name="fav_language" value="color" onClick={(e) => {setBackgroundType('color'); updateBackground('color')}} />
                     <label htmlFor="color">Color</label>
-                    <input type="radio" id="html" name="fav_language" value="image" onClick={(e) => {setBackgroundType('image'); updateBackground('image')}} />
+                    <input className={styles.input} type="radio" id="html" name="fav_language" value="image" onClick={(e) => {setBackgroundType('image'); updateBackground('image')}} />
                     <label htmlFor="image">Image</label>
                 </div>
 
                 {
                     backgroundType === 'color' ? (
-                        <input type="color" id="colorpicker" value="#0000ff" onChange={(e) => {setBackgroundColor(e.target.value); updateBackground('color')} }/>
-                    ) : (
+                        <label >
+                                <input className={styles.colorInput} type="color" id="colorpicker" value="#0000ff" onChange={(e) => {setBackgroundColor(e.target.value); updateBackground('color')} }/>
+                                <div className={styles.color}></div>
+                            </label>
+                        ) : (
                         <input
                             type="file"
                             name="myImage"
@@ -83,13 +114,15 @@ const Appearance = ({id, setID, setbackgroundCSS, setSelectedImage, setBackgroun
 
                 }
 
-                <div className={styles.header}>
-                    Title <br />
-                    <input className={styles.titleInput} type={'text'} placeholder={'Title'} defaultValue={profile.title} onChange={(e) => setTitle(e.target.value)} />
-                </div>
-                <div className={styles.header}>
-                    Description <br />
-                    <textarea className={styles.textarea} onChange={(e) => setDescription(e.target.value)} defaultValue={profile.description} />
+                <div>
+                    <label className={styles.greyButton} >
+                        <input
+                            className={styles.greyButton} type="file" name="myImage" onChange={(event: any) => {
+                                updateImage(event.target.files[0]);
+                            }}
+                        />
+                    New Image
+                    </label>
                 </div>
                 
         </>

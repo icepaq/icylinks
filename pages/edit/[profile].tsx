@@ -99,8 +99,8 @@ const EditProfile = ({profile}: any) => {
                     </div>
                 </div>
                 <div className={styles.padding}>
-                <div id='title' className={styles.title} contentEditable={true}>
-                    {profile.title}
+                <div className={styles.title}>
+                    {/* {selectedScreen == 'links' ? 'Links' : 'Vibe'} */}
                 </div>
                 <div className={styles.button} onClick={updateProfile}>
                     Save Changes
@@ -110,7 +110,7 @@ const EditProfile = ({profile}: any) => {
                         <Links links={links} setLinkObjects={setLinkObjects} setLinks={setLinks} social={social} setSocial={setSocial} setRender={setRender} /> 
                         : 
                         (selectedScreen == 'vibe'?  
-                            <Appearance id={id} setID={setID} setbackgroundCSS={setbackgroundCSS} setSelectedImage={setSelectedImage} 
+                            <Appearance selectedImage={selectedImage} id={id} setID={setID} setbackgroundCSS={setbackgroundCSS} setSelectedImage={setSelectedImage} 
                                         setBackgroundType={setBackgroundType} backgroundType={backgroundType} 
                                         setSelectedBackgroundImage={setSelectedBackgroundImage} backgroundColor={backgroundColor} 
                                         setBackgroundColor={setBackgroundColor} profile={profile} setTitle={setTitle} 
