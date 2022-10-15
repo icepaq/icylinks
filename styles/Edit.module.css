@@ -329,3 +329,8 @@
 .backgroundSelect {
     margin-bottom: 10px;
 }
+
+.backgroundColorSelecter {
+    width: 70%;
+    margin-bottom: 30px;
+}

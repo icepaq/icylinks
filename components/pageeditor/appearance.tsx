@@ -1,6 +1,7 @@
 import styles from "../../styles/Edit.module.css";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { SliderPicker } from "react-color";
 
 const Appearance = ({
   id,
@@ -150,42 +151,31 @@ const Appearance = ({
       </div>
 
       {backgroundType === "color" ? (
-        <label>
-          <input
-            className={styles.colorInput}
-            type="color"
-            id="colorpicker"
-            value="#0000ff"
-            onChange={(e) => {
-              setBackgroundColor(e.target.value);
+        <div className={styles.backgroundColorSelecter}>
+          <SliderPicker
+            color={backgroundColor}
+            onChange={(color) => {
+              setBackgroundColor(color.hex);
               updateBackground("color");
             }}
           />
-          <div className={styles.color}></div>
-        </label>
+        </div>
       ) : (
-        <input
-          type="file"
-          name="myImage"
-          onChange={(event: any) => {
-            updateBackgroundImage(event.target.files[0]);
-          }}
-        />
+        <div>
+          <label className={styles.greyButton}>
+            <input
+              className={styles.greyButton}
+              type="file"
+              name="myImage"
+              onChange={(event: any) => {
+                updateBackgroundImage(event.target.files[0]);
+                updateBackground("image");
+              }}
+            />
+            New Image
+          </label>
+        </div>
       )}
-
-      <div>
-        <label className={styles.greyButton}>
-          <input
-            className={styles.greyButton}
-            type="file"
-            name="myImage"
-            onChange={(event: any) => {
-              updateImage(event.target.files[0]);
-            }}
-          />
-          New Image
-        </label>
-      </div>
     </>
   );
 };
