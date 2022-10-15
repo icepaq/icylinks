@@ -90,10 +90,17 @@ const Appearance = ({id, setID, setbackgroundCSS, setSelectedImage, setBackgroun
                     Background
                 </div>
                 <div className={styles.backgroundSelect}>
-                    <input className={styles.input} type="radio" id="html" name="fav_language" value="color" onClick={(e) => {setBackgroundType('color'); updateBackground('color')}} />
-                    <label htmlFor="color">Color</label>
+                    <span className={styles.backgroundSelector}>
+                        <input className={styles.input} type="radio" id="html" name="fav_language" value="color" onClick={(e) => {setBackgroundType('color'); updateBackground('color')}} />
+                        <label htmlFor="color">Color</label>
+                    </span>
+                    
+                    <span className={styles.backgroundSelector}>
+
                     <input className={styles.input} type="radio" id="html" name="fav_language" value="image" onClick={(e) => {setBackgroundType('image'); updateBackground('image')}} />
                     <label htmlFor="image">Image</label>
+                    </span>
+
                 </div>
 
                 {

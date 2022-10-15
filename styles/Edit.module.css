@@ -321,3 +321,11 @@
     height: 30px;
     background-color: #d0d0d0;
 }
+
+.backgroundSelector {
+    padding-right: 30px;
+}
+
+.backgroundSelect {
+    margin-bottom: 10px;
+}
