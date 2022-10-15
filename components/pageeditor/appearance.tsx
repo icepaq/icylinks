@@ -17,13 +17,14 @@ const Appearance = ({
   setTitle,
   setDescription,
   selectedImage,
+  selectedBackgroundImage,
 }: any) => {
   const changeID = async (e: any) => {
     setID(e.target.value);
   };
 
   useEffect(() => {
-    console.log(selectedImage);
+    console.log(selectedBackgroundImage);
   });
 
   const updateBackground = (type: string) => {
@@ -31,7 +32,7 @@ const Appearance = ({
       setbackgroundCSS({ backgroundColor: backgroundColor });
     } else {
       setbackgroundCSS({
-        backgroundImage: 'url("/background.png")',
+        backgroundImage: `url("${selectedBackgroundImage}")`,
         backgroundSize: "100% 100%",
       });
     }

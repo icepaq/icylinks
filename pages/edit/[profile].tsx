@@ -114,7 +114,7 @@ const EditProfile = ({profile}: any) => {
                                         setBackgroundType={setBackgroundType} backgroundType={backgroundType} 
                                         setSelectedBackgroundImage={setSelectedBackgroundImage} backgroundColor={backgroundColor} 
                                         setBackgroundColor={setBackgroundColor} profile={profile} setTitle={setTitle} 
-                                        setDescription={setDescription} setSocial={setSocial} />
+                                        setDescription={setDescription} setSocial={setSocial} selectedBackgroundImage={selectedBackgroundImage} />
                         : null)
                 }
                 </div>
