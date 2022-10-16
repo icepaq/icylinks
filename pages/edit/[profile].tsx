@@ -34,7 +34,7 @@ const EditProfile = ({ profile }: any) => {
     setDescription(profile.description);
     setSelectedImage(profile.image);
     setLinks(profile.links);
-    setBackgroundType(profile.backgroundType);
+    setBackgroundType(profile.background.type);
     setID(profile.id);
 
     if (profile.background.type == "color") {
@@ -65,7 +65,7 @@ const EditProfile = ({ profile }: any) => {
     const _profile = {
       id: id,
       oldID: profile.id,
-      title: document.getElementById("title")?.innerHTML,
+      title: title,
       image: selectedImage,
       description: description,
       social: social,
@@ -166,6 +166,33 @@ const EditProfile = ({ profile }: any) => {
 export async function getServerSideProps(context: any) {
   const { profile } = context.query;
 
+  const defaultProfile = {
+    id: "@anton",
+    oldID: "@anton",
+    title: "Hello",
+    image:
+      "/uploads/profiles/889cb9b9-abb9-4234-a336-3276dc9ae0a5-1663690120042.png",
+    description: "Co-Founder of Icyl.ink",
+    social: {},
+    links: [
+      {
+        text: "Personal Website",
+        url: "google.com",
+      },
+      {
+        text: "Icy Links",
+        url: "icylinks.com",
+      },
+      {
+        text: "Twitter",
+        url: "https://twitter.com/0xAnton1",
+      },
+    ],
+    background: {
+      data: null,
+    },
+  };
+
   const params = new URLSearchParams();
   params.append("id", profile);
   const r = await fetch(process.env.NEXT_PUBLIC_SITE_URL + "/api/getpage", {
@@ -175,7 +202,7 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
-      profile: r.profile,
+      profile: r ? r.profile : defaultProfile,
     },
   };
 }
