@@ -177,6 +177,41 @@ const Appearance = ({
           </label>
         </div>
       )}
+
+      <div className={styles.chooseAnImage}>
+        <div className={styles.sectionTitleSmall}>
+          Or Choose an Existing Background
+        </div>
+        <div className={styles.backgroundImages}>
+          <div className={styles.backgroundImage} />
+          <div className={styles.backgroundImage} />
+          <div className={styles.backgroundImage} />
+        </div>
+      </div>
+
+      <div className={styles.buttonStyling}>
+        <div className={styles.sectionTitleSmall}>Button Styling</div>
+        <div className={styles.colorSelectorWrapper}>
+          <div className={styles.colorSelector}></div>
+          Background Color
+        </div>
+        <div className={styles.colorSelectorWrapper}>
+          <div className={styles.colorSelector}></div>
+          Text Color
+        </div>
+        <div className={styles.colorSelectorWrapper}>
+          <div>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            defaultValue={100}
+            className={styles.slider}
+          />
+          </div>
+          Transaparency
+        </div>
+      </div>
     </>
   );
 };
